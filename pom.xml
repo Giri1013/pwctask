@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.pwc</groupId>
+  <artifactId>digital</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>digital</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.14.3</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.5.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-jvm -->
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-jvm -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-jvm</artifactId>
+      <version>4.7.1</version>
+      <type>pom</type>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <version>4.7.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>4.7.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-chrome-driver</artifactId>
+      <version>3.141.59</version>
+    </dependency>
+
+    <!--    &lt;!&ndash; https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer &ndash;&gt;-->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-picocontainer</artifactId>
+      <version>4.7.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-core -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-core</artifactId>
+      <version>4.7.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
+    <dependency>
+      <groupId>net.masterthought</groupId>
+      <artifactId>cucumber-reporting</artifactId>
+      <version>4.9.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.12.0</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-remote-driver</artifactId>
+      <version>3.141.59</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-support</artifactId>
+      <version>3.141.59</version>
+    </dependency>
+
+
+  </dependencies>
+
+  <build>
+
+      <plugins>
+        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M3</version>
+          <configuration>
+            <testFailureIgnore>true</testFailureIgnore>
+            <includes>
+              <include>*IT.java</include>
+            </includes>
+            <additionalClasspathElements>
+              <additionalClasspathElement></additionalClasspathElement>
+            </additionalClasspathElements>
+            <useSystemClassLoader>false</useSystemClassLoader>
+            <reuseForks>false</reuseForks>
+            <forkCount>1C</forkCount>
+            <argLine>-Duser.language=en</argLine>
+            <argLine>-Xmx1024m</argLine>
+            <argLine>-XX:MaxPermSize=256m</argLine>
+            <argLine>-Dfile.encoding=UTF-8</argLine>
+            <useFile>false</useFile>
+            <disableXmlReport>true</disableXmlReport>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.github.temyers</groupId>
+          <artifactId>cucumber-jvm-parallel-plugin</artifactId>
+          <version>4.2.0</version>
+          <executions>
+            <execution>
+              <id>generateRunners</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>generateRunners</goal>
+              </goals>
+              <configuration>
+                <!-- Mandatory -->
+                <!-- comma separated list of package names to scan for glue code -->
+                <glue>steps</glue>
+                <outputDirectory>${project.build.directory}/generated-test-sources/cucumber</outputDirectory>
+                <!-- The directory, which must be in the root of the runtime classpath, containing your feature files.  -->
+                <featuresDirectory>src/test/java/features</featuresDirectory>
+                <!-- Directory where the cucumber report files shall be written  -->
+                <cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>
+                <!-- comma separated list of output formats json,html,rerun.txt -->
+                <format>json</format>
+                <!-- CucumberOptions.strict property -->
+                <strict>true</strict>
+                <!-- CucumberOptions.monochrome property -->
+                <monochrome>true</monochrome>
+                <!-- The tags to run, maps to CucumberOptions.tags property you can pass ANDed tags like "@tag1","@tag2" and ORed tags like "@tag1,@tag2,@tag3" -->
+                <tags></tags>
+                <!-- If set to true, only feature files containing the required tags shall be generated. -->
+                <!-- Generate TestNG runners instead of default JUnit ones. -->
+                <useTestNG>true</useTestNG>
+                <!-- The naming scheme to use for the generated test classes.  One of 'simple' or 'feature-title' -->
+                <namingScheme>simple</namingScheme>
+                <!-- The class naming pattern to use.  Only required/used if naming scheme is 'pattern'.-->
+                <namingPattern></namingPattern>
+                <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one Runner per scenario.  FEATURE generates a Runner per feature. -->
+                <parallelScheme>FEATURE</parallelScheme>
+                <!-- This is optional, required only if you want to specify a custom template for the generated sources (this is a relative path) -->
+                <customVmTemplate></customVmTemplate>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals>
+                <goal>java</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <classpathScope>test</classpathScope>
+            <mainClass>helpers.Report</mainClass>
+          </configuration>
+        </plugin>
+      </plugins>
+  </build>
+</project>
